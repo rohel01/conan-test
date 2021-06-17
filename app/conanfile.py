@@ -1,18 +1,14 @@
-from conans import ConanFile, CMake
+from conans import ConanFile, CMake, tools
 
-class Lib2Conan(ConanFile):
-    name = "lib2"
+class AppConan(ConanFile):
+    name = "app"
     version = "0.1"
     settings = "os", "compiler", "build_type", "arch"
     url = "www.melchiore.com"
     license = "MIT"
     description = "Lol2"
     generators = "cmake"
-    requires = ["lib1/0.1@demo/testing"]
-
-    def package(self):
-        self.copy("*.h", dst="include")
-        self.copy("*.a", dst="lib", keep_path=False)
+    requires = ["lib2/0.1@demo/testing"]
 
     def build(self):
         cmake = CMake(self) 
@@ -23,7 +19,3 @@ class Lib2Conan(ConanFile):
             "CPPAST_BUILD_TOOL": False
             })
         cmake.build()
-
-
-    def package_info(self):
-        self.cpp_info.libs = ["lib2"]
